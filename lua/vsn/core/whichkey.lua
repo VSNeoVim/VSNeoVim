@@ -212,6 +212,7 @@ local config = {
         "<cmd>lua require('vsn.core.cf').view_vsneovim_changelog()<CR>",
         "View VSNeoVim's changelog",
       },
+      l = { "<cmd>lua require('vsn.core.cf').vsneovim_cache_logs()<CR>", "View VSNeoVim cachelogs" },
       n = { "<cmd>lua require('telescope').extensions.notify.notify()<CR>", "View Notifications" },
     },
     s = {
