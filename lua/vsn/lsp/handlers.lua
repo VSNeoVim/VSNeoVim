@@ -4,11 +4,22 @@ C.capabilities = vim.lsp.protocol.make_client_capabilities()
 
 C.setup = function()
   local signs = {
-
-    { name = "DiagnosticSignError", text = " " },
-    { name = "DiagnosticSignWarn", text = " " },
-    { name = "DiagnosticSignHint", text = "" },
-    { name = "DiagnosticSignInfo", text = " " },
+    {
+      name = "DiagnosticSignError",
+      text = " "
+    },
+    {
+      name = "DiagnosticSignWarn",
+      text = " "
+    },
+    {
+      name = "DiagnosticSignHint",
+      text = ""
+    },
+    {
+      name = "DiagnosticSignInfo",
+      text = " "
+    },
   }
 
   for _, sign in ipairs(signs) do
@@ -48,6 +59,19 @@ C.setup = function()
   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
     border = "rounded",
   })
+
+  vim.cmd [[
+    highlight! DiagnosticLineNrError guibg=NONE guifg=#ec5f67 gui=bold
+    highlight! DiagnosticLineNrWarn guibg=NONE guifg=#E5C07B gui=bold
+    highlight! DiagnosticLineNrInfo guibg=NONE guifg=#61AFEF gui=bold
+    highlight! DiagnosticLineNrHint guibg=NONE guifg=#98C379 gui=bold
+
+    sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl=DiagnosticSignError numhl=DiagnosticLineNrError
+    sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl=DiagnosticLineNrWarn numhl=DiagnosticLineNrWarn
+    sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl=DiagnosticLineNrInfo numhl=DiagnosticLineNrInfo
+    sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl=DiagnosticLineNrHint numhl=DiagnosticLineNrHint
+  ]]
+
 end
 
 local function lsp_highlight_document(client)
