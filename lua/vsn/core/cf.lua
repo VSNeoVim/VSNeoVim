@@ -37,6 +37,19 @@ function C.grep_vsneovim_files(opts)
   builtin.live_grep(opts)
 end
 
+function C.vsneovim_cache_logs(opts)
+  opts = opts or {}
+  local theme_opts = themes.get_ivy {
+    sorting_strategy = "ascending",
+    layout_strategy = "bottom_pane",
+    prompt_prefix = ">> ",
+    prompt_title = "~ VSNeoVim CacheLogs ~",
+    cwd = get_cache_dir(),
+  }
+  opts = vim.tbl_deep_extend("force", theme_opts, opts)
+  builtin.find_files(opts)
+end
+
 local copy_to_clipboard_action = function(prompt_bufnr)
   local _, action_state = utils.require_clean "telescope.actions.state"
   local entry = action_state.get_selected_entry()
