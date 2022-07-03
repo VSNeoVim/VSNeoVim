@@ -6,19 +6,19 @@ C.setup = function()
   local signs = {
     {
       name = "DiagnosticSignError",
-      text = " "
+      text = " ",
     },
     {
       name = "DiagnosticSignWarn",
-      text = " "
+      text = " ",
     },
     {
       name = "DiagnosticSignHint",
-      text = ""
+      text = "",
     },
     {
       name = "DiagnosticSignInfo",
-      text = " "
+      text = " ",
     },
   }
 
@@ -71,7 +71,6 @@ C.setup = function()
     sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl=DiagnosticLineNrInfo numhl=DiagnosticLineNrInfo
     sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl=DiagnosticLineNrHint numhl=DiagnosticLineNrHint
   ]]
-
 end
 
 local function lsp_highlight_document(client)

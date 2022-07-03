@@ -1,8 +1,8 @@
-local utils = require("vsn.utils")
+local utils = require "vsn.utils"
 
-local LSPI = utils.require_clean("nvim-lsp-installer")
+local LSPI = utils.require_clean "nvim-lsp-installer"
 
-local LSPC = utils.require_clean("lspconfig")
+local LSPC = utils.require_clean "lspconfig"
 
 LSPI.setup {
   automatic_installation = true,
@@ -34,7 +34,7 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-LSPC.sumneko_lua.setup{settings = utils.require_clean("vsn.lsp.settings.sumneko_lua")}
-LSPC.pyright.setup{settings = utils.require_clean("vsn.lsp.settings.pyright")}
-LSPC.html.setup{capabilities = capabilities}
-LSPC.cssls.setup{capabilities = capabilities}
+LSPC.sumneko_lua.setup { settings = utils.require_clean "vsn.lsp.settings.sumneko_lua" }
+LSPC.pyright.setup { settings = utils.require_clean "vsn.lsp.settings.pyright" }
+LSPC.html.setup { capabilities = capabilities }
+LSPC.cssls.setup { capabilities = capabilities }
