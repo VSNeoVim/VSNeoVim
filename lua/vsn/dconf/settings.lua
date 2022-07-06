@@ -26,7 +26,7 @@ function C.load_options()
     termguicolors = true, -- set term gui colors (most terminals support this)
     timeoutlen = 250, -- time to wait for a mapped sequence to complete (in milliseconds)
     title = true, -- set the title of window to the value of the titlestring
-    titlestring = "%<%F%= - VSNeoVim", -- what the title of the window will be set to
+    titlestring = "%F - VSNeoVim", -- what the title of the window will be set to
     undofile = true, -- enable persistent undo
     updatetime = 300, -- faster completion
     writebackup = false, -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
