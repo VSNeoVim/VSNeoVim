@@ -181,8 +181,9 @@ function cloning_vsneovim() {
 }
 function install_binary() {
   msg "installing binary script ..."
-  curl -s https://raw.githubusercontent.com/vsneovim/vsneovim/main/utils/bin/vsn.template >> $HOME/.local/bin/vsn
-  chmod +x $HOME/.local/bin/vsn
+  mkdir $INSTALL_PREFIX/bin/
+  curl -s https://raw.githubusercontent.com/vsneovim/vsneovim/main/utils/bin/vsn.template >> $INSTALL_PREFIX/bin/vsn
+  chmod +x $INSTALL_PREFIX/bin/vsn
 }
 function logo(){
   cat <<'EOF'
