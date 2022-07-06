@@ -110,7 +110,7 @@ ins_right {
     end
 
     local unique_client_names = vim.fn.uniq(buf_client_names)
-    return "﫟[" .. table.concat(unique_client_names, ", ") .. "]"
+    return " [" .. table.concat(unique_client_names, ", ") .. "]"
   end,
   color = { gui = "bold" },
   cond = conditions.hide_in_width,
