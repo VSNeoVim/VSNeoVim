@@ -10,8 +10,8 @@ declare -r XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"$HOME/.config"}"
 declare -r XDG_CACHE_HOME="${XDG_CACHE_HOME:-"$HOME/.cache"}"
 
 declare -r VSN_RUNTIME_DIR="${VSN_RUNTIME_DIR:-"$XDG_DATA_HOME/vsneovim"}"
-declare -r VSN_CONFIG_DIR="${LUNARVIM_CONFIG_DIR:-"$XDG_CONFIG_HOME/vsn"}"
-declare -r VSN_CACHE_DIR="${LUNARVIM_CACHE_DIR:-"$XDG_CACHE_HOME/vsn"}"
+declare -r VSN_CONFIG_DIR="${VSN_CONFIG_DIR_CONFIG_DIR:-"$XDG_CONFIG_HOME/vsn"}"
+declare -r VSN_CACHE_DIR="${VSN_CACHE_DIR:-"$XDG_CACHE_HOME/vsn"}"
 
 function msg() {
   local text="$1"
