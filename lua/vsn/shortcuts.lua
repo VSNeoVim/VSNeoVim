@@ -20,8 +20,8 @@ local defaults = {
     ["<C-j>"] = "<C-w>j",
     ["<C-k>"] = "<C-w>k",
     ["<C-l>"] = "<C-w>l",
-    ["H"] = "<home>",
-    ["E"] = "<end>",
+    ["H"] = "I",
+    ["E"] = "A",
     ["S"] = ":bp!<CR>",
     ["L"] = ":bn!<CR>",
     ["<C-z>"] = ":undo<CR>",
@@ -38,6 +38,7 @@ local defaults = {
     ["<C-t>"] = "<Esc>:SymbolsOutline<CR>",
     ["<A-j>"] = "<Esc>:m .+1<CR>==",
     ["<A-k>"] = "<Esc>:m .-2<CR>==",
+    ["<C-w>"] = "<Esc>:bdelete!<CR>",
   },
   visual_mode = {
     ["<"] = "<gv",
