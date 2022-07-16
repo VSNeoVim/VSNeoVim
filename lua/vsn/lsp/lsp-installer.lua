@@ -5,6 +5,14 @@ local LSPI = utils.require_clean "nvim-lsp-installer"
 local LSPC = utils.require_clean "lspconfig"
 
 LSPI.setup {
+  ensure_installed = {
+    "pyright",
+    "sumneko_lua",
+    "html",
+    "cssls",
+    "emmet_ls",
+    "tsserver",
+  },
   automatic_installation = true,
   ui = {
     -- The border to use for the UI window. Accepts same border values as |nvim_open_win()|.
