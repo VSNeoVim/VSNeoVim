@@ -3,7 +3,7 @@ local utils = require "vsn.utils"
 local ts_config = utils.require_clean "nvim-treesitter.configs"
 
 ts_config.setup {
-  ensure_installed = {}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   ignore_install = {},
   matchup = {
     enable = false, -- mandatory, false will disable the whole extension
