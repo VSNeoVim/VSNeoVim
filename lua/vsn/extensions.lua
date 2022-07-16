@@ -53,7 +53,7 @@ return packer.startup(function(use)
   -- statusline (bufferline)
   use { "nvim-lualine/lualine.nvim" }
   -- terminal
-  use { "akinsho/toggleterm.nvim", disable = not is_enabled "Terminal" }
+  use { "akinsho/toggleterm.nvim", disable = not is_enabled "Terminal", commit='8e6f938ed8eec7f988dc07aec2af148ad57c6d95' }
   -- tagbar
   use { "simrat39/symbols-outline.nvim" }
   -- debuging
