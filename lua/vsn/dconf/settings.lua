@@ -28,7 +28,7 @@ function C.load_options()
     title = true, -- set the title of window to the value of the titlestring
     titlestring = "%F - VSNeoVim", -- what the title of the window will be set to
     undofile = true, -- enable persistent undo
-    updatetime = 300, -- faster completion
+    updatetime = 100, -- faster completion
     writebackup = false, -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
     expandtab = true, -- convert tabs to spaces
     shiftwidth = vsn.options.shiftwidth, -- the number of spaces inserted for each indentation
