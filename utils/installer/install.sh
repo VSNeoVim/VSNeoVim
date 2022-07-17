@@ -139,7 +139,7 @@ function detect_platform() {
           sudo zypper install nodejs npm yarn
         fi
         if confirm "Would you like to install ripgrep ?"; then
-          sudo dnf -y install ripgrep
+          sudo zypper install ripgrep
         fi
       else # assume debian based
         msg "Detecting platform: installing setup on debian based system"
