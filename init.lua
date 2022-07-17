@@ -7,6 +7,10 @@ end
 
 require("vsn.bootstrap"):init(BASEDIR)
 
+require "vsn.dconf.defaultConfig"
+
+vim.cmd("luafile " .. vim.fn.stdpath "config" .. "/config.lua")
+
 require("vsn.extension-loader"):init()
 
 require("vsn.dconf"):load()
