@@ -123,7 +123,7 @@ function detect_platform() {
         if confirm "Would you like to install ripgrep ?"; then
           sudo dnf -y install ripgrep
         fi
-      elif [ -f "/etc/os-release" ]; then
+      elif [ -f "/etc/SuSE-release" ]; then
         msg "Detecting platform: installing setup on gento system"
         if confirm "Would you like to install neovim ?"; then
           sudo zypper install neovim
