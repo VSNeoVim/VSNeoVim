@@ -25,7 +25,6 @@ function usage() {
   echo "Options:"
   echo "    -d, --dependencies                       dependencies"
   echo "    -i, --install                            installing all dependencies"
-  echo "    -m, --miniinstall                        minimal installation dependencies"
 }
 function dependencies() {
   echo "Visual Studio NeoVim All dependencie:"
@@ -53,11 +52,7 @@ function parse_arguments() {
       -i | --install)
         installation
         cloning_vsneovim
-        ;;
-      -m | --miniinstall)
-        miniinstallation
-        cloning_vsneovim
-        exit 0
+        install_binary
         ;;
       -h | --help)
         usage
@@ -66,42 +61,6 @@ function parse_arguments() {
     esac
     shift
   done
-}
-function detect_platform() {
-  OS="$(uname -s)"
-  case "$OS" in
-    Linux)
-      if [ -f "/etc/arch-release" ] || [ -f "/etc/artix-release" ]; then
-        msg "Detecting platform: installing setup on arch based system."
-        RECOMMEND_INSTALL="sudo pacman -S --noconfirm"
-      elif [ -f "/etc/fedora-release" ] || [ -f "/etc/redhat-release" ]; then
-        msg "Detecting platform: installing setup on redhat based system."
-        RECOMMEND_INSTALL="sudo dnf install -y"
-      elif [ -f "/etc/gentoo-release" ]; then
-        msg "Detecting platform: installing setup on gento system"
-        RECOMMEND_INSTALL="emerge install -y"
-      else # assume debian based
-        msg "Detecting platform: installing setup on debian based system"
-        RECOMMEND_INSTALL="sudo apt install -y"
-      fi
-      ;;
-    FreeBSD)
-      RECOMMEND_INSTALL="sudo pkg install -y"
-      ;;
-    NetBSD)
-      RECOMMEND_INSTALL="sudo pkgin install"
-      ;;
-    OpenBSD)
-      RECOMMEND_INSTALL="doas pkg_add"
-      ;;
-    Darwin)
-      RECOMMEND_INSTALL="brew install"
-      ;;
-    *)
-      echo "OS :$OS is not currently supported."
-      exit 1
-      ;;
-  esac
 }
 function confirm() {
   local question="$1"
@@ -121,58 +80,175 @@ function confirm() {
     esac
   done
 }
-function __installing_neovim() {
-  if confirm "Would you like to install neovim ?"; then
-    $RECOMMEND_INSTALL neovim
-  fi
-  echo ""
-}
-function __installing_lua() {
-  if confirm "Would you like to install lua and luajit ?"; then
-    $RECOMMEND_INSTALL luajit
-    $RECOMMEND_INSTALL lua || $RECOMMEND_INSTALL lua5.4
-  fi
-  echo ""
-}
-function __installing_python() {
-  if confirm "Would you like to install neovim's python librarys ?"; then
-    python3 -m pip install pynvim
-  fi
-  echo ""
-}
-function __installing_node() {
-  if confirm "Would you like to install node ?"; then
-    $RECOMMEND_INSTALL nodejs npm yarn
-  fi
-  echo ""
-}
-function __installing_utils() {
-  if confirm "Would you like to install treesitter and lazygit ?"; then
-    $RECOMMEND_INSTALL lazygit  tree-sitter
-  fi
-  echo ""
-}
-function __installing_ripgrep() {
-  if confirm "Would you like to install ripgrep ?"; then
-    $RECOMMEND_INSTALL ripgrep
-  fi
-  echo ""
+function detect_platform() {
+  OS="$(uname -s)"
+  case "$OS" in
+    Linux)
+      if [ -f "/etc/arch-release" ] || [ -f "/etc/artix-release" ]; then
+        msg "Detecting platform: installing setup on arch based system."
+        if confirm "Would you like to install neovim ?"; then
+          sudo pacman -S --noconfirm neovim
+        fi
+        if confirm "Would you like to install lua and luajit ?"; then
+          sudo pacman -S --noconfirm luajit
+          sudo pacman -S --noconfirm lua
+        fi
+        if confirm "Would you like to install neovim's python librarys ?"; then
+          python3 -m pip install pynvim
+        fi
+        if confirm "Would you like to install node ?"; then
+          sudo pacman -S --noconfirm nodejs npm yarn
+        fi
+        if confirm "Would you like to install treesitter and lazygit ?"; then
+          sudo pacman -S --noconfirm lazygit tree-sitter
+        fi
+        if confirm "Would you like to install ripgrep ?"; then
+          sudo pacman -S --noconfirm ripgrep
+        fi
+      elif [ -f "/etc/fedora-release" ] || [ -f "/etc/redhat-release" ]; then
+        msg "Detecting platform: installing setup on redhat based system."
+        if confirm "Would you like to install neovim ?"; then
+          sudo dnf -y install neovim
+        fi
+        if confirm "Would you like to install lua and luajit ?"; then
+          sudo dnf -y install luajit
+          sudo dnf -y install lua
+        fi
+        if confirm "Would you like to install neovim's python librarys ?"; then
+          python3 -m pip install pynvim
+        fi
+        if confirm "Would you like to install node ?"; then
+          sudo dnf -y install nodejs npm yarn
+        fi
+        if confirm "Would you like to install ripgrep ?"; then
+          sudo dnf -y install ripgrep
+        fi
+      elif [ -f "/etc/os-release" ]; then
+        msg "Detecting platform: installing setup on gento system"
+        if confirm "Would you like to install neovim ?"; then
+          sudo zypper install neovim
+        fi
+        if confirm "Would you like to install lua and luajit ?"; then
+          sudo zypper install luajit
+          sudo zypper install lua
+        fi
+        if confirm "Would you like to install neovim's python librarys ?"; then
+          python3 -m pip install pynvim
+        fi
+        if confirm "Would you like to install node ?"; then
+          sudo zypper install nodejs npm yarn
+        fi
+        if confirm "Would you like to install ripgrep ?"; then
+          sudo dnf -y install ripgrep
+        fi
+      else # assume debian based
+        msg "Detecting platform: installing setup on debian based system"
+        if confirm "Would you like to install neovim ?"; then
+          sudo apt -y install neovim
+        fi
+        if confirm "Would you like to install lua and luajit ?"; then
+          sudo apt -y install luajit
+          sudo apt -y install lua
+        fi
+        if confirm "Would you like to install neovim's python librarys ?"; then
+          python3 -m pip install pynvim
+        fi
+        if confirm "Would you like to install node ?"; then
+          sudo apt -y install nodejs npm yarn
+        fi
+        if confirm "Would you like to install ripgrep ?"; then
+          sudo dnf -y install ripgrep
+        fi
+      fi
+      ;;
+    FreeBSD)
+      msg "Detecting platform: installing setup on FreeBSD system"
+      if confirm "Would you like to install neovim ?"; then
+        sudo pkg install neovim
+      fi
+      if confirm "Would you like to install lua and luajit ?"; then
+        sudo pkg install luajit
+        sudo pkg install lua
+      fi
+      if confirm "Would you like to install neovim's python librarys ?"; then
+        python3 -m pip install pynvim
+      fi
+      if confirm "Would you like to install node ?"; then
+        sudo pkg install nodejs npm yarn
+      fi
+      if confirm "Would you like to install ripgrep ?"; then
+        sudo pkg install ripgrep
+      fi
+      ;;
+    NetBSD)
+      msg "Detecting platform: installing setup on NetBSD system"
+      if confirm "Would you like to install neovim ?"; then
+        sudo pkgin install neovim
+      fi
+      if confirm "Would you like to install lua and luajit ?"; then
+        sudo pkgin install luajit
+        sudo pkgin install lua
+      fi
+      if confirm "Would you like to install neovim's python librarys ?"; then
+        python3 -m pip install pynvim
+      fi
+      if confirm "Would you like to install node ?"; then
+        sudo pkgin install nodejs npm yarn
+      fi
+      if confirm "Would you like to install ripgrep ?"; then
+        sudo pkgin install ripgrep
+      fi
+      ;;
+    OpenBSD)
+      msg "Detecting platform: installing setup on OpenBSD system"
+      if confirm "Would you like to install neovim ?"; then
+        doas pkg_add neovim
+      fi
+      if confirm "Would you like to install lua and luajit ?"; then
+        doas pkg_add luajit
+        doas pkg_add lua
+      fi
+      if confirm "Would you like to install neovim's python librarys ?"; then
+        python3 -m pip install pynvim
+      fi
+      if confirm "Would you like to install node ?"; then
+        doas pkg_add nodejs npm yarn
+      fi
+      if confirm "Would you like to install ripgrep ?"; then
+        doas pkg_add ripgrep
+      fi
+      ;;
+    Darwin)
+      RECOMMEND_INSTALL="brew install"
+      msg "Detecting platform: installing setup on OpenBSD system"
+      if confirm "Would you like to install neovim ?"; then
+        brew install neovim
+      fi
+      if confirm "Would you like to install lua and luajit ?"; then
+        brew install luajit
+        brew install lua
+      fi
+      if confirm "Would you like to install neovim's python librarys ?"; then
+        python3 -m pip install pynvim
+      fi
+      if confirm "Would you like to install node ?"; then
+        brew install nodejs npm yarn
+      fi
+      if confirm "Would you like to install ripgrep ?"; then
+        brew install ripgrep
+      fi
+      if confirm "Would you like to install treesitter and lazygit ?"; then
+        brew install lazygit tree-sitter
+      fi
+      ;;
+    *)
+      echo "OS :$OS is not currently supported."
+      exit 1
+      ;;
+  esac
 }
 function installation() {
   detect_platform
-  __installing_neovim
-  __installing_lua
-  __installing_python
-  __installing_node
-  __installing_utils
-  __installing_ripgrep
-}
-function miniinstallation() {
-  detect_platform
-  __installing_lua
-  __installing_python
-  __installing_node
-  __installing_ripgrep
 }
 function cloning_vsneovim() {
   msg "cloning VSNeoVim ..."
