@@ -148,7 +148,7 @@ function detect_platform() {
         fi
         if confirm "Would you like to install lua and luajit ?"; then
           sudo apt -y install luajit
-          sudo apt -y install lua
+          sudo apt -y install lua5.4
         fi
         if confirm "Would you like to install neovim's python librarys ?"; then
           python3 -m pip install pynvim
